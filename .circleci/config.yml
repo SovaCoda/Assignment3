@@ -1,23 +1,28 @@
 version: 2.1
-orbs:
-  coveralls: coveralls/coveralls@2.1.0
-  jobs:
-    build:
-      docker:
-        - image: circleci/python:3.8
-        - coveralls/upload
-      steps:
-        - checkout
-        - run:
-            name: Install dependencies
-            command: |
-              python3 -m venv venv
-              . venv/bin/activate
-        - run:
-            name: Run tests
-            command: |
-              . venv/bin/activate
-              python -m unittest discover -v
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            coverage -m unittest discover -v
+      - run:
+        name: Send coverage to coveralls
+        command: |
+          . venv/bin/activate
+          coveralls
+        when: always
+        
 workflows:
   version: 2
   build_and_test:
