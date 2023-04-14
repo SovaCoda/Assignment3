@@ -1,0 +1,30 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            coverage run -m test_bmi
+      - run:
+          name: Send coverage to coveralls
+          command: |
+            . venv/bin/activate
+            coveralls
+          when: always
+          
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
