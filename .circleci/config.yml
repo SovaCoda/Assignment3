@@ -17,12 +17,12 @@ jobs:
             . venv/bin/activate
             coverage -m unittest discover -v
       - run:
-        name: Send coverage to coveralls
-        command: |
-          . venv/bin/activate
-          coveralls
-        when: always
-        
+          name: Send coverage to coveralls
+          command: |
+            . venv/bin/activate
+            coveralls
+          when: always
+          
 workflows:
   version: 2
   build_and_test:
