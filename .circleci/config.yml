@@ -15,7 +15,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            python -m unittest discover
+            python -m unittest discover -v
 workflows:
   version: 2
   build_and_test:
