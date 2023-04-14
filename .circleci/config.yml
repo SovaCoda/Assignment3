@@ -15,7 +15,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            coverage -m unittest discover -v
+            coverage run -m test_bmi
       - run:
           name: Send coverage to coveralls
           command: |
